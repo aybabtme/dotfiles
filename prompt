@@ -1,0 +1,6 @@
+# The real thing is here
+hostname="%m"
+username="%n"
+cur_path="%2d"
+export PROMPT="Ԝ  "
+export RPROMPT="${cur_path} (${username}@${hostname})"
