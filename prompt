@@ -1,6 +1,42 @@
-# The real thing is here
-hostname="%m"
+# git:
+# %b => current branch
+# %a => current action (rebase/merge)
+# prompt:
+# %F => color dict
+# %f => reset color
+# %~ => current path
+# %* => time
+# %n => username
+# %m => shortname host
+# %(?..) => prompt conditional - %(condition.true.false)
+zstyle ':vcs_info:*' enable git hg # You can add hg too if needed: `git hg`
+zstyle ':vcs_info:git*' formats ' (%b)'
+zstyle ':vcs_info:git*' actionformats ' (%b|%a)'
+
+# Fastest possible way to check if repo is dirty
+git_dirty() {
+  git diff -diff-quiet --ignore-submodules HEAD 2>/dev/null; [ $? -eq 1 ] && echo '   ҈'
+}
+
+precmd() {
+  vcs_info
+}
+
+# Variables
+hostname="%M"
 username="%n"
-cur_path="%2d"
-export PROMPT="Ԝ  "
-export RPROMPT="${cur_path} (${username}@${hostname})"
+separator="@"
+cur_path="%~"
+# Colorize them
+hostname="%F{white}${hostname}%f"
+username="%F{black}${username}%f"
+separator="%F{black}${separator}%f"
+cur_path="%F{cyan}${cur_path}%f"
+
+# Put em together
+who_part="${username}${separator}${hostname}"
+
+where_part="${cur_path}"
+
+PROMPT="${where_part} Ԝ  "
+export RPROMPT="${who_part}"

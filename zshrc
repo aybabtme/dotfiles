@@ -1,5 +1,10 @@
+autoload -Uz compinit vcs_info
+
+compinit
+
 export EDITOR=vim
 
+# Set the prompt
 source $HOME/dotfiles/prompt
 
 # Alias
