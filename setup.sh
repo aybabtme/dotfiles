@@ -12,11 +12,11 @@ if [ -n "$GOROOT" ]; then
 
 	# Set gocode
 	go get -u github.com/nsf/gocode	
-#	cp -r $GOPATH/src/github.com/nsf/gocode/vim $(pwd)
+	cp -r $GOPATH/src/github.com/nsf/gocode/vim $(pwd)
 
 	# Set golint
 	go get -u github.com/golang/lint/golint
-#	cp -r $GOPATH/src/github.com/golang/lint/misc/vim $(pwd)
+	cp -r $GOPATH/src/github.com/golang/lint/misc/vim $(pwd)
 else
 	echo "Go is not installed... you should install it."
 fi
@@ -31,3 +31,6 @@ git clone https://github.com/scrooloose/nerdtree.git vim/bundle/nerdtree
 
 # Syntastic
 git clone https://github.com/scrooloose/syntastic.git vim/bundle/syntastic
+
+# GoCode
+git clone https://github.com/Blackrush/vim-gocode.git vim/bundle/vim-gocode
