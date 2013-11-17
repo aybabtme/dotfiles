@@ -20,3 +20,14 @@ if [ -n "$GOROOT" ]; then
 else
 	echo "Go is not installed... you should install it."
 fi
+
+# VIM Pathogen
+mkdir -p ~/.vim/autoload ~/.vim/bundle; \
+curl -Sso ~/.vim/autoload/pathogen.vim \
+    https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
+
+# VIM NERDTree
+git clone https://github.com/scrooloose/nerdtree.git vim/bundle/nerdtree
+
+# Syntastic
+git clone https://github.com/scrooloose/syntastic.git vim/bundle/syntastic

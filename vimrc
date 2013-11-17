@@ -1,5 +1,6 @@
-set number
 set nocompatible
+set number
+execute pathogen#infect()
 syntax on
 
 filetype plugin on
@@ -25,6 +26,10 @@ autocmd BufWritePost,FileWritePost *.go execute 'GoVet' | cwindow
 " Recognize markdown files
 au BufRead,BufNewFile *.md set filetype=markdown
 
+" NERDTree
+autocmd vimenter * NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q
+map <F2> :NERDTreeToggle<CR>
 
 " Tabs instead oc <c-x> <c-o>
 autocmd FileType *
