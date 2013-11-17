@@ -17,3 +17,5 @@ alias gs="git status"
 alias ls="ls -G"
 alias ll="ls -Glh"
 alias la="ls -Glah"
+
+alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'

@@ -26,7 +26,7 @@ precmd() {
 hostname="%M"
 username="%n"
 separator="@"
-cur_path="%~"
+cur_path="%2~"
 # Colorize them
 hostname="%F{white}${hostname}%f"
 username="%F{black}${username}%f"
