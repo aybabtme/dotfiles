@@ -5,21 +5,25 @@ ln -s $(pwd)/vim $HOME/.vim
 
 # Append zshrc shared settings to current zshrc
 echo "source $HOME/dotfiles/zshrc" >> $HOME/.zshrc
+source $HOME/.zshrc
 
-# Copy/update Go files, if Go is installed
-if [ -n "$GOROOT" ]; then
-	cp -r $GOROOT/misc/vim $(pwd)
+# Install Go
+hg clone -u release https://code.google.com/p/go $HOME/go
+pushd
+cd $HOME/go/src
+./all.bash
+popd
 
-	# Set gocode
-	go get -u github.com/nsf/gocode	
-	cp -r $GOPATH/src/github.com/nsf/gocode/vim $(pwd)
+# Copy/update Go files
+cp -r $GOROOT/misc/vim $(pwd)
 
-	# Set golint
-	go get -u github.com/golang/lint/golint
-	cp -r $GOPATH/src/github.com/golang/lint/misc/vim $(pwd)
-else
-	echo "Go is not installed... you should install it."
-fi
+# Set gocode
+go get -u github.com/nsf/gocode	
+cp -r $GOPATH/src/github.com/nsf/gocode/vim $(pwd)
+
+# Set golint
+go get -u github.com/golang/lint/golint
+cp -r $GOPATH/src/github.com/golang/lint/misc/vim $(pwd)
 
 # VIM Pathogen
 mkdir -p ~/.vim/autoload ~/.vim/bundle; \

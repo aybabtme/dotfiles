@@ -19,3 +19,12 @@ alias ll="ls -Glh"
 alias la="ls -Glah"
 
 alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
+
+# Path and GoPath
+export PATH=$HOME/bin:$PATH
+export PATH=$HOME/usr/local/bin:$PATH
+export PATH=$HOME/go/bin:$PATH
+export PATH=$HOME/gocode/bin:$PATH
+
+export GOPATH=$HOME/gocode
+export GOROOT=$HOME/go
