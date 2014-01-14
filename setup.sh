@@ -17,6 +17,9 @@ popd
 # Copy/update Go files
 cp -r $GOROOT/misc/vim $(pwd)
 
+# Set go vet
+go get code.google.com/p/go.tools/cmd/vet
+
 # Set gocode
 go get -u github.com/nsf/gocode	
 cp -r $GOPATH/src/github.com/nsf/gocode/vim $(pwd)
