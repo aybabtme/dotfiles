@@ -29,8 +29,8 @@ separator="@"
 cur_path="%2~"
 # Colorize them
 hostname="%F{white}${hostname}%f"
-username="%F{cyan}${username}%f"
-separator="%F{black}${separator}%f"
+username="%F{magenta}${username}%f"
+separator="%F{yellow}${separator}%f"
 cur_path="%F{cyan}${cur_path}%f"
 
 # Put em together
@@ -38,5 +38,4 @@ who_part="${username}${separator}${hostname}"
 
 where_part="${cur_path}"
 
-PROMPT="${where_part} Ԝ  "
-export RPROMPT="${who_part}"
+PROMPT="${who_part} ${where_part} $ "
