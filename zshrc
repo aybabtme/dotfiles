@@ -1,6 +1,6 @@
 autoload -Uz compinit vcs_info
-
 compinit
+set -o vi
 
 export EDITOR=vim
 
