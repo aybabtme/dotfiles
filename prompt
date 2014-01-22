@@ -29,7 +29,7 @@ separator="@"
 cur_path="%2~"
 # Colorize them
 hostname="%F{white}${hostname}%f"
-username="%F{black}${username}%f"
+username="%F{cyan}${username}%f"
 separator="%F{black}${separator}%f"
 cur_path="%F{cyan}${cur_path}%f"
 
