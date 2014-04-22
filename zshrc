@@ -1,4 +1,6 @@
 autoload -Uz compinit vcs_info
+setopt inc_append_history
+setopt share_history
 compinit
 set -o vi
 
@@ -24,6 +26,8 @@ alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
 
 alias bach="ssh -i $HOME/key/bach.pem ubuntu@23.23.83.39"
 alias tbach="ssh -i $HOME/key/bach.pem ubuntu@23.23.83.39 -t tmux a"
+alias svpn="ssh -p 2222 antoine@162.243.79.239"
+alias vpn="ssh -ND 12345 -p 2222 antoine@162.243.79.239"
 
 # Path and GoPath
 export PATH=/usr/local/bin:$PATH
