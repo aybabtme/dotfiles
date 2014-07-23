@@ -21,7 +21,7 @@ set -xg PATH "$HOME/bin" "/usr/local/bin" $PATH
 
 set -xg GOPATH "$HOME/gocode" $GOPATH
 set -xg PATH "$GOPATH/bin" $PATH
-set -xg CDPATH $CDPATH "$GOPATH/src"
+set -xg CDPATH $CDPATH "$GOPATH/src" . ~
 
 
 set -xg EDITOR "vim"

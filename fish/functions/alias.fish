@@ -13,3 +13,7 @@ end
 function tailf
     tail -f
 end
+
+function gs
+    sl
+end
