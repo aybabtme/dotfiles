@@ -2,10 +2,8 @@
 ln -s $(pwd)/tmux.conf $HOME/.tmux.conf
 ln -s $(pwd)/vimrc $HOME/.vimrc
 ln -s $(pwd)/vim $HOME/.vim
-
-# Append zshrc shared settings to current zshrc
-echo "source $HOME/dotfiles/zshrc" >> $HOME/.zshrc
-source $HOME/.zshrc
+ln -s $(pwd)/fish $HOME/.config/fish
+ln -s $(pwd)/gitconfig $HOME/gitconfig
 
 # Install Go
 hg clone -u release https://code.google.com/p/go $HOME/go
@@ -21,7 +19,7 @@ cp -r $GOROOT/misc/vim $(pwd)
 go get code.google.com/p/go.tools/cmd/vet
 
 # Set gocode
-go get -u github.com/nsf/gocode	
+go get -u github.com/nsf/gocode
 cp -r $GOPATH/src/github.com/nsf/gocode/vim $(pwd)
 
 # Set golint
