@@ -8,4 +8,6 @@ antoine.todo
 .Rhistory
 *.sublime-workspace
 [#]*[#]
-.\#*
+.\#*emacs.d/auto-save-list/*
+emacs.d/auto-save-list/
+emacs.d/ac-comphist.dat
