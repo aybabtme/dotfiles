@@ -7,25 +7,43 @@
 (require 'evil)
 (evil-mode 1)
 
-; autocomplete
-(add-to-list 'load-path "~/.emacs.d/popup-el/")
-(add-to-list 'load-path "~/.emacs.d/autocomplete/")
-(add-to-list 'load-path "~/.emacs.d/go-autocomplete/")
-(require 'go-autocomplete)
-(require 'auto-complete-config)
-(ac-config-default)
+(add-to-list 'load-path "~/.emacs.d/emacs-flymake/")
+(require 'flymake)
 
+; autocomplete with company
+(add-hook 'after-init-hook 'global-company-mode)
+
+; ====================================================================
 ; go mode
+; ====================================================================
 (add-to-list 'load-path "~/.emacs.d/go-mode.el/")
-(require 'go-mode)
+(require 'go-mode-load)
 
-(defun user-go-mode-hook ()
-  ; gofmt on sav
-  (add hook 'before-save-hook 'gofmt-before-save)
-  ; godef on Meta+.
-  (local-set-key (kbd "M-.") 'godef-jump))
-  ; build, test, vet on builds
-  (if (not (string-match "go" compile-command))
-      (set (make-local-variable 'compile-command)
-           "go build -v && go test -v && go vet"))
-(add-hook 'go-mode-hook 'user-go-mode-hook)
+(add-hook 'before-save-hook 'gofmt-before-save)
+(add-hook 'go-mode-hook (lambda ()
+                          (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)))
+(add-hook 'go-mode-hook (lambda ()
+                          (local-set-key (kbd "C-c i") 'go-goto-imports)))
+(add-hook 'go-mode-hook (lambda ()
+                          (local-set-key (kbd \"M-.\") 'godef-jump)))
+
+; gocode autocomplete
+(add-to-list 'load-path "~/.emacs.d/company-go/")
+(require 'company)
+(require 'company-go)
+
+(setq company-tooltip-limit 20)                      ; bigger popup window
+(setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
+(setq company-echo-delay 0)                          ; remove annoying blinking
+(setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
+
+(add-hook 'go-mode-hook (lambda ()
+                          (set (make-local-variable 'company-backends) '(company-go))
+                          (company-mode)))
+
+; go flymake
+(add-to-list 'load-path "~/.emacs.d/goflymake")
+(require 'go-flymake)
+
+; (add-to-list 'load-path "~/.emacs.d/goflymake")
+; (require 'go-flycheck)

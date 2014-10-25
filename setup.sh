@@ -62,10 +62,15 @@ install_go_tools() {
     # go tools (vet/oracle/cover/rename)
     go get -u -v code.google.com/p/go.tools/cmd/...
     
-    # Set gocode
+    # golint
+    go get -u -v github.com/golang/lint/golint
+    
+    # gocode
     go get -u -v github.com/nsf/gocode
     
-    # Set golint
-    go get -u -v github.com/golang/lint/golint
-
+    # godef
+    go get -u -v code.google.com/p/rog-go/exp/cmd/godef
+    
+    # go flymake for emacs
+    go get -u -v github.com/dougm/goflymake
 }
