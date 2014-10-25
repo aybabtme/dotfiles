@@ -1,7 +1,11 @@
 .DS_Store
-*.s??
 *.pyc
 /tags
 vendor_batman
 .rbenv-version
 .bundle
+antoine.todo
+.Rhistory
+*.sublime-workspace
+[#]*[#]
+.\#*

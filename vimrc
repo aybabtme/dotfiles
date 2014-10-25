@@ -1,6 +1,6 @@
 set nocompatible
 set number
-execute pathogen#infect()
+"execute pathogen#infect()
 syntax on
 
 filetype plugin on
@@ -33,5 +33,5 @@ autocmd FileType go compiler go
 au BufRead,BufNewFile *.md set filetype=markdown
 
 " NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q
-map <F2> :NERDTreeToggle<CR>
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q
+" map <F2> :NERDTreeToggle<CR>

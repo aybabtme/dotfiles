@@ -1,2 +1,1 @@
-set -xg AWS_ACCESS_KEY (cat $HOME/key/genghis.aws.access)
-set -xg AWS_SECRET_KEY (cat $HOME/key/genghis.aws.secret)
+set -xg PATH $PATH /usr/local/Cellar/ruby/2.1.2/bin
