@@ -5,6 +5,7 @@ compinit
 set -o vi
 
 export EDITOR=emacs
+export ALTERNATE_EDITOR=""
 
 # Set the prompt
 source $HOME/dotfiles/prompt

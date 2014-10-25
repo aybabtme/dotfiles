@@ -17,16 +17,18 @@
 (add-to-list 'load-path "~/.emacs.d/elisp/go-errcheck/")
 (add-to-list 'load-path "~/.emacs.d/elisp/go-mode/")
 (add-to-list 'load-path "~/.emacs.d/elisp/goflymake/")
+(add-to-list 'load-path "~/.emacs.d/elisp/yasnippet")
 
 ;;;; requires 
 (require 'evil)
 (require 'flymake)
 (require 'company)
+(require 'yasnippet)
 ; go
 (require 'company-go)
+(require 'go-eldoc)
 (require 'go-flymake)
 ;(require 'go-flycheck)
-(require 'go-eldoc)
 
 ; ===================================================================
 ; general
@@ -34,6 +36,10 @@
 
 ; evil mode
 (evil-mode 1)
+
+; yas snippets
+(add-to-list 'yas-snippet-dirs "~/.emacs.d/elisp/yasnippet-go")
+(yas-global-mode 1)
 
 ; autocomplete with company
 (add-hook 'after-init-hook 'global-company-mode)
@@ -57,3 +63,7 @@
                           (set (make-local-variable 'company-backends) '(company-go))
                           (company-mode)))
 (add-hook 'go-mode-hook 'go-eldoc-setup)
+
+
+(load "server")
+(unless (server-running-p) (server-start))

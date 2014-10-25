@@ -24,11 +24,13 @@ set -xg PATH "$GOPATH/bin" $PATH
 set -xg CDPATH $CDPATH "$GOPATH/src" . ~
 
 
-set -xg EDITOR "emacs"
+set -xg EDITOR "emacsclient"
+set -xg ALTERNATE_EDITOR ""
 set -xg BUNDLE_EDITOR "emacs"
 set -xg PAGER "less"
-alias vi emacs
-alias vim emacs
+alias vi 'emacsclient -t'
+alias vim 'emacsclient -t'
+alias e 'emacsclient -t'
 
 set --local host_spec $HOME/dotfiles/fish/(hostname -s)_spec.fish
 
