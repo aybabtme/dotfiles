@@ -28,7 +28,7 @@ set -xg EDITOR "emacs"
 set -xg BUNDLE_EDITOR "emacs"
 set -xg PAGER "less"
 alias vi emacs
-alias vim sl
+alias vim emacs
 
 set --local host_spec $HOME/dotfiles/fish/(hostname -s)_spec.fish
 
