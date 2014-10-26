@@ -18,14 +18,13 @@
 (add-to-list 'load-path "~/.emacs.d/elisp/go-mode/")
 (add-to-list 'load-path "~/.emacs.d/elisp/goflymake/")
 (add-to-list 'load-path "~/.emacs.d/elisp/yasnippet")
-(add-to-list 'load-path "~/.emacs.d/elisp/dockerfile-mode/")
 
 ;;;; requires 
 (require 'evil)
 (require 'flymake)
 (require 'company)
 (require 'yasnippet)
-(require 'dockerfile-mode)
+(require 'multiple-cursors)
 ; go
 (require 'company-go)
 (require 'go-eldoc)
@@ -50,8 +49,35 @@
 ;(setq company-echo-delay 0)                          ; remove annoying blinking
 (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
 
-; detect docker files
-(add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
+; multicursors
+(setq mc/cmds-to-run-for-all
+      '(
+        evil-append-line
+        evil-backward-WORD-begin
+        evil-backward-word-begin
+        evil-delete-char
+        evil-delete-line
+        evil-digit-argument-or-evil-beginning-of-line
+        evil-emacs-state
+        evil-end-of-line
+        evil-force-normal-state
+        evil-forward-WORD-begin
+        evil-forward-WORD-end
+        evil-forward-word-begin
+        evil-forward-word-end
+        evil-insert
+        evil-next-line
+        evil-normal-state
+        evil-previous-line
+        ))
+
+; ====================================================================
+; keybindings
+; ====================================================================
+
+(setq mac-command-modifier 'hyper)
+(global-set-key (kbd "M-s") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-c M-s") 'mc/mark-all-like-this)
 
 ; ====================================================================
 ; go mode
@@ -67,22 +93,6 @@
                           (set (make-local-variable 'company-backends) '(company-go))
                           (company-mode)))
 (add-hook 'go-mode-hook 'go-eldoc-setup)
-
-;;;; mouse support
-
-;; Enable mouse support
-(unless window-system
-  (require 'mouse)
-  (xterm-mouse-mode t)
-  (global-set-key [mouse-4] '(lambda ()
-                              (interactive)
-                              (scroll-down 1)))
-  (global-set-key [mouse-5] '(lambda ()
-                              (interactive)
-                              (scroll-up 1)))
-  (defun track-mouse (e))
-  (setq mouse-sel-mode t)
-)
 
 (load "server")
 (unless (server-running-p) (server-start))
