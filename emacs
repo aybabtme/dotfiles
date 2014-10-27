@@ -38,13 +38,16 @@
 ; evil mode
 (evil-mode 1)
 
+; helm mode
+(helm-mode 1)
+
 ; yas snippets
 (add-to-list 'yas-snippet-dirs "~/.emacs.d/elisp/yasnippet-go")
 (yas-global-mode 1)
 
 ; autocomplete with company
 (add-hook 'after-init-hook 'global-company-mode)
-(setq company-tooltip-limit 20)                      ; bigger popup window
+(setq company-tooltip-limit 40)                      ; bigger popup window
 (setq company-idle-delay .1)                         ; decrease delay before autocompletion popup shows
 ;(setq company-echo-delay 0)                          ; remove annoying blinking
 (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
