@@ -1,6 +1,5 @@
 ;; -*- mode: emacs-lisp -*-
 (setq warning-suppress-types nil)
-(setq debug-on-error t)
 (setq package-enable-at-startup nil)
 
 (require 'package)
@@ -10,7 +9,6 @@
 (package-initialize)
 
 ;;;; Load paths
-(add-to-list 'load-path "~/.emacs.d/elisp/company-go/")
 (add-to-list 'load-path "~/.emacs.d/elisp/emacs-flymake/")
 (add-to-list 'load-path "~/.emacs.d/elisp/emacs-go-eldoc/")
 (add-to-list 'load-path "~/.emacs.d/elisp/evil/")
@@ -22,22 +20,29 @@
 ;;;; requires 
 (require 'evil)
 (require 'flymake)
-(require 'company)
 (require 'yasnippet)
 (require 'multiple-cursors)
+(require 'auto-complete-config)
+(require 'auto-complete)
+
 ; go
-(require 'company-go)
 (require 'go-eldoc)
 (require 'go-flymake)
-;(require 'go-flycheck)
+(require 'go-autocomplete)
+(require 'go-flycheck)
 (require 'golint)
 
 ; ===================================================================
 ; general
 ; ===================================================================
 
+;disable backup
+(setq backup-inhibited t)
+;disable auto save
+(setq auto-save-default nil)
+
 ; evil mode
-(evil-mode 1)
+(evil-mode 0)
 
 ; helm mode
 (helm-mode 1)
@@ -46,12 +51,9 @@
 (add-to-list 'yas-snippet-dirs "~/.emacs.d/elisp/yasnippet-go")
 (yas-global-mode 1)
 
-; autocomplete with company
-(add-hook 'after-init-hook 'global-company-mode)
-(setq company-tooltip-limit 40)                      ; bigger popup window
-(setq company-idle-delay .1)                         ; decrease delay before autocompletion popup shows
-;(setq company-echo-delay 0)                          ; remove annoying blinking
-(setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
+; autocomplete
+(ac-config-default)
+(auto-complete-mode 1)
 
 ; multicursors
 (setq mc/cmds-to-run-for-all
@@ -60,7 +62,7 @@
         evil-backward-WORD-begin
         evil-backward-word-begin
         evil-delete-char
-        evil-delete-line
+        evil-delete-lineOA
         evil-digit-argument-or-evil-beginning-of-line
         evil-emacs-state
         evil-end-of-line
@@ -91,26 +93,15 @@
                           (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)))
 (add-hook 'go-mode-hook (lambda ()
                           (local-set-key (kbd "C-c i") 'go-goto-imports)))
-(add-hook 'go-mode-hook (lambda ()
-                          (local-set-key (kbd "<f7>") 'godef-jump)))
-(add-hook 'go-mode-hook (lambda ()
-                          (set (make-local-variable 'company-backends) '(company-go))
-                          (company-mode)))
-(add-hook 'go-mode-hook 'go-eldoc-setup)
 
-(add-hook 'before-save-hook 'gofmt-before-save)
-
-(setq gofmt-command "goimports")
-
-(defun go-run-check-tools ()
-  "Add this to .emacs to run golint on the current buffer when saving:
- (add-hook 'before-save-hook 'go-run-check-tools)."
-  (interactive)
-  (when (eq major-mode 'go-mode) (lambda () 
-				   (golint) 
-				   (go-errcheck)
-				   )))
-(add-hook 'before-save-hook 'go-run-check-tools)
+(defun go-mode-setup ()
+  (setq compile-command "go build -v && go test -v && go vet")
+  (define-key (current-local-map) "\C-c\C-c" 'compile)
+  (go-eldoc-setup)
+  (setq gofmt-command "goimports")
+  (add-hook 'before-save-hook 'gofmt-before-save)
+  (local-set-key (kbd "M-.") 'godef-jump))
+(add-hook 'go-mode-hook 'go-mode-setup)
 
 (load "server")
 (unless (server-running-p) (server-start))
