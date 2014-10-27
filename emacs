@@ -30,6 +30,7 @@
 (require 'go-eldoc)
 (require 'go-flymake)
 ;(require 'go-flycheck)
+(require 'golint)
 
 ; ===================================================================
 ; general
@@ -91,11 +92,25 @@
 (add-hook 'go-mode-hook (lambda ()
                           (local-set-key (kbd "C-c i") 'go-goto-imports)))
 (add-hook 'go-mode-hook (lambda ()
-                          (local-set-key (kbd "M-.") 'godef-jump)))
+                          (local-set-key (kbd "<f7>") 'godef-jump)))
 (add-hook 'go-mode-hook (lambda ()
                           (set (make-local-variable 'company-backends) '(company-go))
                           (company-mode)))
 (add-hook 'go-mode-hook 'go-eldoc-setup)
+
+(add-hook 'before-save-hook 'gofmt-before-save)
+
+(setq gofmt-command "goimports")
+
+(defun go-run-check-tools ()
+  "Add this to .emacs to run golint on the current buffer when saving:
+ (add-hook 'before-save-hook 'go-run-check-tools)."
+  (interactive)
+  (when (eq major-mode 'go-mode) (lambda () 
+				   (golint) 
+				   (go-errcheck)
+				   )))
+(add-hook 'before-save-hook 'go-run-check-tools)
 
 (load "server")
 (unless (server-running-p) (server-start))
