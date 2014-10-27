@@ -20,6 +20,10 @@ alias tvpn="ssh -p 443 antoine@vpn.antoine.im -t tmux a"
 alias svpn="ssh -p 443 antoine@vpn.antoine.im"
 alias vpn="ssh -ND 12345 -p 443 antoine@vpn.antoine.im"
 
+alias vim="emacsclient -t"
+alias vi="emacsclient -t"
+alias e="emacsclient -t"
+
 # Path and GoPath
 export PATH=/usr/local/bin:$PATH
 export PATH=$HOME/bin:$PATH
