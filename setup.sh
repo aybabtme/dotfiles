@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+root=$(git rev-parse --show-toplevel)
+
 # helpers
 command_exists() {
     hash $1 2> /dev/null
@@ -18,13 +20,13 @@ fetch_tgz() {
 
 setup_dotfiles_simlink() {
     # Symlink the dotfiles
-    ln -s $(pwd)/tmux.conf $HOME/.tmux.conf
-    ln -s $(pwd)/tmux $HOME/.tmux
-    ln -s $(pwd)/vimrc $HOME/.vimrc
-    ln -s $(pwd)/vim $HOME/.vim
-    ln -s $(pwd)/fish $HOME/.config/fish
-    ln -s $(pwd)/gitconfig $HOME/.gitconfig
-    ln -s $(pwd)/gitignore $HOME/.gitignore
+    ln -s ${root}/tmux.conf $HOME/.tmux.conf
+    ln -s ${root}/tmux $HOME/.tmux
+    ln -s ${root}/vimrc $HOME/.vimrc
+    ln -s ${root}/vim $HOME/.vim
+    ln -s ${root}/fish $HOME/.config/fish
+    ln -s ${root}/gitconfig $HOME/.gitconfig
+    ln -s ${root}/gitignore $HOME/.gitignore
 }
 
 
