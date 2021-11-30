@@ -10,14 +10,13 @@ if test -d "/usr/local/sbin"
   set -xg PATH $PATH "/usr/local/sbin"
 end
 
-set -xg GOPATH "$HOME/gocode" $GOPATH
+set -xg GOPATH "$HOME/code" $GOPATH
 set -xg PATH "$GOPATH/bin" $PATH
 set -xg CDPATH $CDPATH "$GOPATH/src" . ~
 
-
-set -xg EDITOR "nvim"
+set -xg EDITOR "vim"
 set -xg ALTERNATE_EDITOR ""
-set -xg BUNDLE_EDITOR "nvim"
+set -xg BUNDLE_EDITOR "vim"
 set -xg PAGER "less"
 
 set --local host_spec $HOME/dotfiles/fish/(hostname -s)_spec.fish
