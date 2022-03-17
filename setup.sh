@@ -26,7 +26,7 @@ function overwrite_with_symlink() {
     require_command "unlink"
 
     local src=${1}
-    local dst=${1}
+    local dst=${2}
     if [ -L ${dst} ]; then
         unlink ${dst}
     elif [ -f ${dst} ]; then
