@@ -13,12 +13,16 @@ function require_command() {
 function setup_dotfiles_symlink() {
     require_command "ln"
 
-    ln -s ${root}/config $HOME/.config
-    ln -s ${root}/gitconfig $HOME/.gitconfig
-    ln -s ${root}/gitignore $HOME/.gitignore
+    overwrite_with_symlink "${root}/config" "${HOME}/.config"
+    overwrite_with_symlink "${root}/gitconfig" "${HOME}/.gitconfig"
+    overwrite_with_symlink "${root}/gitignore" "${HOME}/.gitignore"
+    overwrite_with_symlink "${root}/" "${HOME}/dotfiles"
 }
 
 function overwrite_with_symlink() {
+    require_command "ln"
+    require_command "unlink"
+
     local src=${1}
     local dst=${1}
     if [ -L ${dst} ]; then
@@ -33,7 +37,6 @@ function change_shell_to_fish() {
     require_command "which"
     require_command "fish"
     require_command "sudo"
-    require_command "echo"
     require_command "chsh"
 
     local fish_path=$(which fish)
