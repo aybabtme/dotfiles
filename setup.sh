@@ -15,6 +15,7 @@ function require_command() {
 function setup_dotfiles_symlink() {
     require_command "ln"
 
+    mkdir -p "${HOME}/.config/"
     overwrite_with_symlink "${root}/config/fish" "${HOME}/.config/fish"
     overwrite_with_symlink "${root}/gitconfig" "${HOME}/.gitconfig"
     overwrite_with_symlink "${root}/gitignore" "${HOME}/.gitignore"
