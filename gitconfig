@@ -78,7 +78,7 @@
 [push]
   default = simple
 [core]
-  autocrlf = input
+	autocrlf = input
   excludesfile = ~/dotfiles/gitignore
 [hub]
   protocol = https
@@ -89,7 +89,3 @@
   smudge = git-media-smudge %f
 [url "git@github.com:"]
     insteadOf = https://github.com/
-
-[url "git@github.internal.digitalocean.com:"]
-    insteadOf = git://github.internal.digitalocean.com/
-    insteadOf = https://github.internal.digitalocean.com/

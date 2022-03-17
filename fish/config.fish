@@ -26,3 +26,11 @@ set fish_greeting ""
 if test -f "$host_spec"
   . $host_spec
 end
+
+set -xg GOPROXY "https://goproxy.githubapp.com/mod,https://proxy.golang.org/,direct"
+set -xg GOPRIVATE ""
+set -xg GONOPROXY ""
+set -xg GONOSUMDB "github.com/github/*"
+
+test -e {$HOME}/.iterm2_shell_integration.fish ; and source {$HOME}/.iterm2_shell_integration.fish
+
