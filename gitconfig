@@ -68,7 +68,7 @@
   f = fetch
   r = reset
   p = push
-    tree = log -n 50 --pretty=\"%C(yellow)%h %Creset %s %C(red)(%cr)%Creset\" --graph
+  tree = log -n 50 --pretty=\"%C(yellow)%h %Creset %s %C(red)(%cr)%Creset\" --graph
   pof = push origin --force
 
   # rebase
@@ -78,14 +78,10 @@
 [push]
   default = simple
 [core]
-	autocrlf = input
+  autocrlf = input
   excludesfile = ~/dotfiles/gitignore
 [hub]
   protocol = https
-[credential]
-  helper = osxkeychain
 [filter "media"]
   clean = git-media-clean %f
   smudge = git-media-smudge %f
-[url "git@github.com:"]
-    insteadOf = https://github.com/
