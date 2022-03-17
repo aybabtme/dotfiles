@@ -2,6 +2,8 @@
 
 root=$(git rev-parse --show-toplevel)
 
+set -x
+
 function require_command() {
     local cmd=${1}
     if ! command -v ${cmd} &> /dev/null; then
@@ -13,7 +15,7 @@ function require_command() {
 function setup_dotfiles_symlink() {
     require_command "ln"
 
-    overwrite_with_symlink "${root}/config" "${HOME}/.config"
+    overwrite_with_symlink "${root}/config/fish" "${HOME}/.config/fish"
     overwrite_with_symlink "${root}/gitconfig" "${HOME}/.gitconfig"
     overwrite_with_symlink "${root}/gitignore" "${HOME}/.gitignore"
     overwrite_with_symlink "${root}/" "${HOME}/dotfiles"
@@ -30,7 +32,7 @@ function overwrite_with_symlink() {
     elif [ -f ${dst} ]; then
         rm ${dst}
     fi
-    ln -s ${src} {dst}
+    ln -s ${src} ${dst}
 }
 
 function change_shell_to_fish() {
