@@ -2,7 +2,7 @@
 
 root=$(git rev-parse --show-toplevel)
 
-set -x
+set -Eeuox pipefail
 
 function require_command() {
     local cmd=${1}
