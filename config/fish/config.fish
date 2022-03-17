@@ -3,7 +3,10 @@ set -xg PATH "/usr/bin" $PATH
 set -xg PATH "/bin" $PATH
 set -xg PATH "/usr/sbin" $PATH
 set -xg PATH "/sbin" $PATH
-set -xg PATH "$HOME/go/bin" $PATH
+
+if test -d "$HOME/go/bin"
+  set -xg PATH "$HOME/go/bin" $PATH
+end
 
 # Homebrew install folder should come first
 if test -d "/usr/local/sbin"
@@ -33,4 +36,3 @@ set -xg GONOPROXY ""
 set -xg GONOSUMDB "github.com/github/*"
 
 test -e {$HOME}/.iterm2_shell_integration.fish ; and source {$HOME}/.iterm2_shell_integration.fish
-

@@ -2,47 +2,39 @@
 
 root=$(git rev-parse --show-toplevel)
 
-# helpers
-command_exists() {
-    hash $1 2> /dev/null
-}
-
-fetch_tgz() {
-    if command_exists "curl"; then
-	curl $1 | tar xz -C $2
-    elif command_exists "wget"; then
-	wget -qO- $1 | tar xz -C $2
-    else
-	echo "no curl or wget, cant fetch files"
-	exit 1
+function require_command() {
+    local cmd=${1}
+    if ! command -v ${cmd} &> /dev/null; then
+        echo "${cmd} could not be found"
+        exit
     fi
 }
 
-setup_dotfiles_simlink() {
-    # Symlink the dotfiles
-    ln -s ${root}/tmux.conf $HOME/.tmux.conf
-    ln -s ${root}/tmux $HOME/.tmux
-    ln -s ${root}/vimrc $HOME/.vimrc
-    ln -s ${root}/vim $HOME/.vim
-    ln -s ${root}/fish $HOME/.config/fish
+function setup_dotfiles_simlink() {
+    require_command "ln"
+
+    ln -s ${root}/config $HOME/.config
     ln -s ${root}/gitconfig $HOME/.gitconfig
     ln -s ${root}/gitignore $HOME/.gitignore
 }
 
+function change_shell_to_fish() {
+    require_command "which"
+    require_command "fish"
+    require_command "sudo"
+    require_command "echo"
+    require_command "chsh"
 
-install_go_tools() {
-    # go tools (vet/oracle/cover/rename)
-    go get -u -v code.google.com/p/go.tools/cmd/...
-    
-    # golint
-    go get -u -v github.com/golang/lint/golint
-    
-    # gocode
-    go get -u -v github.com/nsf/gocode
-    
-    # godef
-    go get -u -v code.google.com/p/rog-go/exp/cmd/godef
-    
+    local fish_path=$(which fish)
+    if grep -q "fish" /etc/shells; then
+        sudo echo ${fish_path} >> /etc/shells
+    fi
+    chsh -s ${fish_path}
 }
 
-setup_dotfiles_simlink
+function main() {
+    setup_dotfiles_simlink
+    change_shell_to_fish
+}
+
+main
