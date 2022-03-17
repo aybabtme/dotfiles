@@ -10,12 +10,23 @@ function require_command() {
     fi
 }
 
-function setup_dotfiles_simlink() {
+function setup_dotfiles_symlink() {
     require_command "ln"
 
     ln -s ${root}/config $HOME/.config
     ln -s ${root}/gitconfig $HOME/.gitconfig
     ln -s ${root}/gitignore $HOME/.gitignore
+}
+
+function overwrite_with_symlink() {
+    local src=${1}
+    local dst=${1}
+    if [ -L ${dst} ]; then
+        unlink ${dst}
+    elif [ -f ${dst} ]; then
+        rm ${dst}
+    fi
+    ln -s ${src} {dst}
 }
 
 function change_shell_to_fish() {
@@ -33,7 +44,7 @@ function change_shell_to_fish() {
 }
 
 function main() {
-    setup_dotfiles_simlink
+    setup_dotfiles_symlink
     change_shell_to_fish
 }
 
