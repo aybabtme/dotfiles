@@ -4,18 +4,31 @@ set -xg PATH "/bin" $PATH
 set -xg PATH "/usr/sbin" $PATH
 set -xg PATH "/sbin" $PATH
 
-if test -d "$HOME/go/bin"
-  set -xg PATH "$HOME/go/bin" $PATH
-end
-
 # Homebrew install folder should come first
 if test -d "/usr/local/sbin"
   set -xg PATH $PATH "/usr/local/sbin"
 end
 
-set -xg GOPATH "$HOME/code" $GOPATH
-set -xg PATH "$GOPATH/bin" $PATH
-set -xg CDPATH $CDPATH "$GOPATH/src" . ~
+switch (hostname)
+case "codespaces*"
+  if test -d "/workspaces/github"
+    # don't set CDPATH as it doesn't work for dotcom
+  else
+    set -xg CDPATH "." "~"
+  end
+case "*"
+  set -xg CDPATH "." "~"
+end
+
+if test -d "$HOME/code"
+  set -xg GOPATH "$HOME/code" $GOPATH
+  set -xg PATH "$GOPATH/bin" $PATH
+  set -xg CDPATH "$GOPATH/src" $CDPATH
+end
+
+if test -d "$HOME/go/bin"
+  set -xg PATH "$HOME/go/bin" $PATH
+end
 
 set -xg EDITOR "vim"
 set -xg ALTERNATE_EDITOR ""
