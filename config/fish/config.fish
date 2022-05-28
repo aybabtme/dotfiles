@@ -35,7 +35,7 @@ set -xg ALTERNATE_EDITOR ""
 set -xg BUNDLE_EDITOR "vim"
 set -xg PAGER "less"
 
-set --local host_spec $HOME/dotfiles/fish/(hostname -s)_spec.fish
+set --local host_spec $HOME/.config/fish/(hostname -s)_spec.fish
 
 set fish_greeting ""
 
