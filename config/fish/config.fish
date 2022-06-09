@@ -30,6 +30,7 @@ if test -d "$HOME/go/bin"
   set -xg PATH "$HOME/go/bin" $PATH
 end
 
+set -xg GIT_EDITOR "vim"
 set -xg EDITOR "vim"
 set -xg ALTERNATE_EDITOR ""
 set -xg BUNDLE_EDITOR "vim"
