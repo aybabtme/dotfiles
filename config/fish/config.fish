@@ -10,16 +10,7 @@ if test -d "/usr/local/sbin"
   set -xg PATH $PATH "/usr/local/sbin"
 end
 
-switch (hostname)
-case "codespaces*"
-  if test -d "/workspaces/github"
-    # don't set CDPATH as it doesn't work for dotcom
-  else
-    set -xg CDPATH "." "~"
-  end
-case "*"
-  set -xg CDPATH "." "~"
-end
+set -xg CDPATH "." "~"
 
 if test -d "$HOME/code"
   set -xg GOPATH "$HOME/code" $GOPATH
