@@ -3,6 +3,7 @@ set -xg PATH "/usr/bin" $PATH
 set -xg PATH "/bin" $PATH
 set -xg PATH "/usr/sbin" $PATH
 set -xg PATH "/sbin" $PATH
+set -xg PATH "/usr/local/bin" $PATH
 
 # Homebrew install folder should come first
 if test -d "/usr/local/sbin"
@@ -35,6 +36,7 @@ set -xg EDITOR "vim"
 set -xg ALTERNATE_EDITOR ""
 set -xg BUNDLE_EDITOR "vim"
 set -xg PAGER "less"
+set -xg GOEXPERIMENT "loopvar"
 
 set --local host_spec $HOME/.config/fish/(hostname -s)_spec.fish
 
@@ -44,9 +46,6 @@ if test -f "$host_spec"
   . $host_spec
 end
 
-set -xg GOPROXY "https://goproxy.githubapp.com/mod,https://proxy.golang.org/,direct"
-set -xg GOPRIVATE ""
-set -xg GONOPROXY ""
-set -xg GONOSUMDB "github.com/github/*"
 
 test -e {$HOME}/.iterm2_shell_integration.fish ; and source {$HOME}/.iterm2_shell_integration.fish
+status --is-interactive; and source (rbenv init -|psub)

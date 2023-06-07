@@ -1,6 +1,13 @@
 [user]
   name = Antoine Grondin
   email = antoinegrondin@gmail.com
+  signingkey = /Users/antoine/.ssh/id_rsa.pub
+[gpg]
+  format = ssh
+[commit]
+  gpgsign = true
+[url "ssh://git@github.com/"]
+  insteadOf = https://github.com/
 [github]
   user = aybabtme
   password = !security 2>&1 >/dev/null find-generic-password -gs github.password | ruby -e 'print $1 if STDIN.gets =~ /^password: \\\\\"(.*)\\\\\"$/'
@@ -21,6 +28,7 @@
   added = yellow
   changed = green
   untracked = cyan
+
 [alias]
   remove-missing = "!git ls-files -d -z | xargs -0 git update-index --remove"
   po = "!git push --set-upstream origin \"$(git rev-parse --abbrev-ref HEAD)\""
