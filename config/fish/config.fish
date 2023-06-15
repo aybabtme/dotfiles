@@ -27,7 +27,7 @@ set -xg EDITOR "vim"
 set -xg ALTERNATE_EDITOR ""
 set -xg BUNDLE_EDITOR "vim"
 set -xg PAGER "less"
-set -xg GOEXPERIMENT "loopvar"
+# set -xg GOEXPERIMENT "loopvar"
 
 set --local host_spec $HOME/.config/fish/(hostname -s)_spec.fish
 
