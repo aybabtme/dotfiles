@@ -18,7 +18,20 @@ function tailscale
 end
 
 function select-turtle
-	pskube --list | fzf > ~/.planetscale/current-turtle
+  set old_turtle ""
+  if test -e ~/.planetscale/current-turtle
+    cat ~/.planetscale/current-turtle | read old_turtle
+  end
+	
+  pskube --list | fzf > ~/.planetscale/current-turtle
+  cat ~/.planetscale/current-turtle | read new_turtle
+  log "using turtle $new_turtle"
+
+  if test -e ~/.planetscale/current-cluster; test "$old_turtle" != "$new_turtle"
+    log "turtle changed from $old_turtle to $new_turtle, clearing cluster selection"
+    unselect-cluster
+  end
+
 end
 
 function unselect-turtle
@@ -33,6 +46,26 @@ function get-turtle
 	cat < ~/.planetscale/current-turtle
 end
 
+function select-cluster
+	pkud get psc -o json | jq -r -c '.items[] | .metadata.labels' | fzf > ~/.planetscale/current-cluster
+  jq < ~/.planetscale/current-cluster '.["psdb.co/cluster"]' | read new_cluster
+  echo ""
+  log "using cluster $new_cluster"
+end
+
+function unselect-cluster
+  if test -e ~/.planetscale/current-cluster
+    rm ~/.planetscale/current-cluster
+  end
+end
+
+function get-psid
+  if not test -e ~/.planetscale/current-cluster
+    select-cluster
+  end
+  jq < ~/.planetscale/current-cluster -r '.["psdb.co/cluster"]'
+end
+
 function pk -d "Call `pskube` with the current turtle"
   log "<turtle: $(get-turtle), namespace: default>"
   pskube (get-turtle) $argv
@@ -41,6 +74,15 @@ end
 function pkud -d "Call `pskube` with the current turtle, in the user-data namespace"
   log "<turtle: $(get-turtle), namespace: user-data>"
   pskube (get-turtle) $argv --namespace user-data
+end
+
+function pkcluster -d "Call `pskube` with the current turtle, in the user-data namespace, with a label filtering the current cluster"
+  log "<turtle: $(get-turtle), namespace: user-data, cluster: $(get-psid)>"
+  pskube (get-turtle) $argv --namespace user-data -l psdb.co/cluster=(get-psid)
+end
+
+function get-cluster-shell-vtctl
+  get-psid
 end
 
 function clean-turtle -d "Clean up dev turtle"
