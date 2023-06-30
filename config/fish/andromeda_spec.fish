@@ -14,7 +14,7 @@ function log
 end
 
 function tailscale
-	/Applications/Tailscale.app/Contents/MacOS/Tailscale $argv
+  /Applications/Tailscale.app/Contents/MacOS/Tailscale $argv
 end
 
 function select-turtle
@@ -22,7 +22,7 @@ function select-turtle
   if test -e ~/.planetscale/current-turtle
     cat ~/.planetscale/current-turtle | read old_turtle
   end
-	
+
   pskube --list | fzf > ~/.planetscale/current-turtle
   cat ~/.planetscale/current-turtle | read new_turtle
   log "using turtle $new_turtle"
@@ -39,15 +39,15 @@ function unselect-turtle
 end
 
 function get-turtle
-	# if current turtle is empty, first call select turtle
+  # if current turtle is empty, first call select turtle
   if not test -e ~/.planetscale/current-turtle
     select-turtle
   end
-	cat < ~/.planetscale/current-turtle
+  cat < ~/.planetscale/current-turtle
 end
 
 function select-cluster
-	pkud get psc -o json | jq -r -c '.items[] | .metadata.labels' | fzf > ~/.planetscale/current-cluster
+  pkud get psc -o json | jq -r -c '.items[] | .metadata.labels' | fzf > ~/.planetscale/current-cluster
   jq < ~/.planetscale/current-cluster '.["psdb.co/cluster"]' | read new_cluster
   echo ""
   log "using cluster $new_cluster"
@@ -78,7 +78,7 @@ end
 
 function pkcluster -d "Call `pskube` with the current turtle, in the user-data namespace, with a label filtering the current cluster"
   log "<turtle: $(get-turtle), namespace: user-data, cluster: $(get-psid)>"
-  pskube (get-turtle) $argv --namespace user-data -l psdb.co/cluster=(get-psid)
+  pskube (get-turtle) $argv --namespace user-data -l psdb.co/cluster=(get-psid) -L psdb.co/keyspace,psdb.co/shard,psdb.co/tablet-type,psdb.co/cell
 end
 
 function get-cluster-shell-vtctl
@@ -94,8 +94,8 @@ function clean-turtle -d "Clean up dev turtle"
 end
 
 function psop-logs
-	pk logs -l app=psdb-operator -f | humanlog --truncate=false
-end 
+  pk logs -l app=psdb-operator -f | humanlog --truncate=false
+end
 
 function show-pods -d "Show all pods for a given branch"
   pk -n user-data get pods  -L psdb.co/tablet-type -L psdb.co/cell -L psdb.co/cluster -L psdb.co/cluster-type -L psdb.co/shard -L psdb.co/keyspace -L psdb.co/size
