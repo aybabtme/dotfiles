@@ -23,7 +23,7 @@ function select-turtle
     cat ~/.planetscale/current-turtle | read old_turtle
   end
 
-  pskube --list | fzf > ~/.planetscale/current-turtle
+  pskube --list-completion | gum filter > ~/.planetscale/current-turtle
   cat ~/.planetscale/current-turtle | read new_turtle
   log "using turtle $new_turtle"
 
@@ -46,8 +46,13 @@ function get-turtle
   cat < ~/.planetscale/current-turtle
 end
 
+function ts-up-down
+  tailscale down; and tailscale up
+  sleep 0.1
+end
+
 function select-cluster
-  pkud get psc -o json | jq -r -c '.items[] | .metadata.labels' | fzf > ~/.planetscale/current-cluster
+  pkud get psc -o json | jq  -r -c '.items[] | .metadata.labels' | gum filter > ~/.planetscale/current-cluster
   jq < ~/.planetscale/current-cluster '.["psdb.co/cluster"]' | read new_cluster
   echo ""
   log "using cluster $new_cluster"
@@ -68,17 +73,31 @@ end
 
 function pk -d "Call `pskube` with the current turtle"
   log "<turtle: $(get-turtle), namespace: default>"
+  log pskube (get-turtle) $argv
   pskube (get-turtle) $argv
 end
 
 function pkud -d "Call `pskube` with the current turtle, in the user-data namespace"
   log "<turtle: $(get-turtle), namespace: user-data>"
-  pskube (get-turtle) $argv --namespace user-data
+  set new_argv
+  set has_namespace 0
+  for arg in $argv
+    if [ "$arg" = "--" ]
+      set -a new_argv --namespace user-data
+      set has_namespace 1
+    end
+    set -a new_argv $arg
+  end
+  if [ $has_namespace = 0 ]
+    set -a new_argv --namespace user-data
+  end
+  log pskube (get-turtle) $new_argv
+  pskube (get-turtle) $new_argv
 end
 
 function pkcluster -d "Call `pskube` with the current turtle, in the user-data namespace, with a label filtering the current cluster"
   log "<turtle: $(get-turtle), namespace: user-data, cluster: $(get-psid)>"
-  pskube (get-turtle) $argv --namespace user-data -l psdb.co/cluster=(get-psid) -L psdb.co/keyspace,psdb.co/shard,psdb.co/tablet-type,psdb.co/cell
+  pkud $argv -l psdb.co/cluster=(get-psid) -L psdb.co/keyspace,psdb.co/shard,psdb.co/tablet-type,psdb.co/cell
 end
 
 function get-cluster-shell-vtctl
