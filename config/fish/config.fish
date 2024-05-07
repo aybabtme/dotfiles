@@ -29,6 +29,7 @@ set -xg BUNDLE_EDITOR "vim"
 set -xg PAGER "less"
 # set -xg GOEXPERIMENT "loopvar"
 
+eval (/opt/homebrew/bin/brew shellenv)
 set --local host_spec $HOME/.config/fish/(hostname -s)_spec.fish
 
 set fish_greeting ""
@@ -39,4 +40,3 @@ end
 
 
 test -e {$HOME}/.iterm2_shell_integration.fish ; and source {$HOME}/.iterm2_shell_integration.fish
-status --is-interactive; and source (rbenv init -|psub)
