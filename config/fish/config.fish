@@ -6,8 +6,8 @@ set -xg PATH "/sbin" $PATH
 set -xg PATH "/usr/local/bin" $PATH
 
 # Homebrew install folder should come first
-if test -d "/usr/local/sbin"
-  set -xg PATH $PATH "/usr/local/sbin"
+if test -d (/opt/homebrew/bin/brew --prefix)"/bin"
+  set -xg PATH (/opt/homebrew/bin/brew --prefix)"/bin" $PATH
 end
 
 set -xg CDPATH "." "~"
