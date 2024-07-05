@@ -5,9 +5,10 @@ set -xg PATH "/usr/sbin" $PATH
 set -xg PATH "/sbin" $PATH
 set -xg PATH "/usr/local/bin" $PATH
 
-# Homebrew install folder should come first
-if test -d (/opt/homebrew/bin/brew --prefix)"/bin"
-  set -xg PATH (/opt/homebrew/bin/brew --prefix)"/bin" $PATH
+# Homebrew install folder should come firs
+set -l brewpath (which brew)
+if test -d ($brewpath --prefix)"/bin"
+  set -xg PATH ($brewpath --prefix)"/bin" $PATH
 end
 
 set -xg CDPATH "." "~"
@@ -29,7 +30,7 @@ set -xg BUNDLE_EDITOR "vim"
 set -xg PAGER "less"
 # set -xg GOEXPERIMENT "loopvar"
 
-eval (/opt/homebrew/bin/brew shellenv)
+eval ($brewpath shellenv)
 set --local host_spec $HOME/.config/fish/(hostname -s)_spec.fish
 
 set fish_greeting ""

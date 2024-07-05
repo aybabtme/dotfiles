@@ -1,11 +1,11 @@
 [user]
   name = Antoine Grondin
   email = antoinegrondin@gmail.com
-	signingkey = /Users/antoine/.ssh/id_rsa.pub
+  signingkey = ~/.ssh/id_rsa.pub
 [gpg]
-	format = ssh
+  format = ssh
 [commit]
-	gpgsign = true
+  gpgsign = true
 [url "ssh://git@github.com/"]
   insteadOf = https://github.com/
 [github]
@@ -93,5 +93,5 @@
 [filter "media"]
   clean = git-media-clean %f
   smudge = git-media-smudge %f
-[http]
-	sslVerify = true
+[http]	
+  sslVerify = true
